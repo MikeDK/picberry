@@ -52,7 +52,8 @@
 #include "devices/pic24fjxxxga2_gb2.h"
 #include "devices/pic24fxxka1xx.h"
 
-int                 mem_fd;
+//int                 mem_fd;
+int                 gpio_fd;
 void                *gpio_map;
 volatile uint32_t   *gpio;
 
@@ -374,16 +375,16 @@ clean:
 /* Set up a memory regions to access GPIO */
 void setup_io(void)
 {
-    /* open /dev/mem */
-    mem_fd = open("/dev/mem", O_RDWR|O_SYNC);
-    if (mem_fd == -1) {
-        perror("Cannot open /dev/mem");
+    /* open /dev/gpiomem */
+    gpio_fd = open("/dev/gpiomem", O_RDWR|O_SYNC);
+    if (gpio_fd == -1) {
+        perror("Cannot open /dev/gpiomem");
         exit(1);
     }
 
     /* mmap GPIO */
     gpio_map = mmap(0, BLOCK_SIZE, PROT_READ|PROT_WRITE,
-                    MAP_SHARED, mem_fd, GPIO_BASE);
+                    MAP_SHARED, gpio_fd, 0);
     if (gpio_map == MAP_FAILED) {
         perror("mmap() failed");
         exit(1);
@@ -421,10 +422,10 @@ void close_io(void)
             exit(1);
         }
 
-        /* close /dev/mem */
-        ret = close(mem_fd);
+        /* close /dev/gpiomem */
+        ret = close(gpio_fd);
         if (ret == -1) {
-            perror("Cannot close /dev/mem");
+            perror("Cannot close /dev/gpiomem");
             exit(1);
         }
 }
