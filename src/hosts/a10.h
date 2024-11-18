@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
+#define SW_PORTC_IO_BASE  	0x01c20800
+#define GPIO_BASE		  	0x01c20000
 #define OFFSET			  	0x00000800
 #define BLOCK_SIZE			0x00002000
 

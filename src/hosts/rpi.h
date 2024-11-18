@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Set flag to use /dev/gpiomem instead of /dev/mem */
+#define USE_DEV_GPIOMEM
 
 /* GPIO registers address */
 #define BLOCK_SIZE         (256)
