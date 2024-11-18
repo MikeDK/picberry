@@ -438,10 +438,14 @@ void close_io(void)
             exit(1);
         }
 
-        /* close /dev/gpiomem */
+        /* close /dev/gpiomem or /dev/mem */
         ret = close(mem_fd);
         if (ret == -1) {
+#ifdef USE_DEV_GPIOMEM
             perror("Cannot close /dev/gpiomem");
+#else
+            perror("Cannot close /dev/mem");
+#endif
             exit(1);
         }
 }
