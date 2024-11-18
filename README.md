@@ -52,9 +52,7 @@ To build picberry launch `make TARGET`, where _TARGET_ can be one of the followi
 
 |   _TARGET_    | Processor/Board                            |
 | ------------- | ------------------------------------------ |
-| raspberrypi   | Raspberry Pi v1 or Zero                    |
-| raspberrypi2  | Raspberry Pi v2 or v3                      |
-| raspberrypi4  | Raspberry Pi 4A or 4B or CM4
+| raspberrypi   | Raspberry Pi all models                    |
 | am335x        | Boards based on TI AM335x (BeagleBone)     |
 | a10           | Boards based on Allwinner A10 (Cubieboard) |
 
@@ -62,7 +60,7 @@ Then launch `sudo make install` to install it to /usr/bin.
 
 To change destination prefix use PREFIX=, e.g. `sudo make install PREFIX=/usr/local`.
 
-For cross-compilation, given that you have the required cross toolchain in you PATH, simply export the `CROSS_COMPILE` variable before launching `make`, e.g. `CROSS_COMPILE=arm-linux-gnueabihf- make raspberrypi2`.
+For cross-compilation, given that you have the required cross toolchain in you PATH, simply export the `CROSS_COMPILE` variable before launching `make`, e.g. `CROSS_COMPILE=arm-linux-gnueabihf- make raspberrypi`.
 
 ## Using picberry
 

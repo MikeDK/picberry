@@ -31,8 +31,6 @@ default:
 	 @echo "Please specify a target with 'make raspberrypi', 'make a10' or 'make am335x'."
 
 raspberrypi: prepare picberry
-raspberrypi2: prepare picberry
-raspberrypi4: prepare picberry
 a10: prepare picberry
 am335x: prepare picberry gpio_test
 
