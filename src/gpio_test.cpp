@@ -177,7 +177,7 @@ void close_io(void)
         }
 
         /* close /dev/gpiomem */
-        ret = close(gpio_fd);
+        ret = close(mem_fd);
         if (ret == -1) {
             perror("Cannot close /dev/gpiomem");
             exit(1);
