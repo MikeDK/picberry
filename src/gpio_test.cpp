@@ -38,7 +38,7 @@
 
 #include "common.h"
 
-int                 gpio_fd;
+int                 mem_fd;
 void                *gpio_map;
 volatile uint32_t   *gpio;
 
@@ -129,22 +129,38 @@ int main(int argc, char *argv[])
 /* Set up a memory regions to access GPIO */
 void setup_io(void)
 {
-        /* open /dev/gpiomem */
-        gpio_fd = open("/dev/gpiomem", O_RDWR|O_SYNC);
-        if (gpio_fd == -1) {
-                perror("Cannot open /dev/gpiomem");
-                exit(1);
-        }
+#ifdef USE_DEV_GPIOMEM
+    /* open /dev/gpiomem */
+    mem_fd = open("/dev/gpiomem", O_RDWR|O_SYNC);
+    if (mem_fd == -1) {
+            perror("Cannot open /dev/gpiomem");
+            exit(1);
+    }
 
-        /* mmap GPIO */
-        gpio_map = mmap(0, BLOCK_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, gpio_fd, 0);
-        if (gpio_map == MAP_FAILED) {
-                perror("mmap() failed");
-                exit(1);
-        }
+    /* mmap GPIO */
+    gpio_map = mmap(0, BLOCK_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, mem_fd, 0);
+    if (gpio_map == MAP_FAILED) {
+            perror("mmap() failed");
+            exit(1);
+    }
+#else
+    /* open /dev/mem */
+    mem_fd = open("/dev/mem", O_RDWR|O_SYNC);
+    if (mem_fd == -1) {
+            perror("Cannot open /dev/mem");
+            exit(1);
+    }
 
-        /* Always use volatile pointer! */
-        gpio = (volatile uint32_t *) gpio_map;
+    /* mmap GPIO */
+    gpio_map = mmap(0, BLOCK_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, mem_fd, GPIO_BASE);
+    if (gpio_map == MAP_FAILED) {
+            perror("mmap() failed");
+            exit(1);
+    }
+#endif
+
+    /* Always use volatile pointer! */
+    gpio = (volatile uint32_t *) gpio_map;
 
 }
 
