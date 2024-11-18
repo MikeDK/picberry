@@ -25,8 +25,6 @@ DEVICES = $(BUILDDIR)/devices/dspic33e.o \
 
 a10: CFLAGS += -DBOARD_A10
 raspberrypi: CFLAGS += -DBOARD_RPI
-raspberrypi2: CFLAGS += -DBOARD_RPI2
-raspberrypi4: CFLAGS += -DBOARD_RPI4
 am335x: CFLAGS += -DBOARD_AM335X
 
 default:
