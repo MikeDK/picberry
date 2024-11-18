@@ -426,28 +426,28 @@ void setup_io(void)
 /* Release GPIO memory region */
 void close_io(void)
 {
-        int ret;
-        
-        /* MCLR as input, puts the output driver in Hi-Z */
-        GPIO_IN(pic_mclr);
+    int ret;
+    
+    /* MCLR as input, puts the output driver in Hi-Z */
+    GPIO_IN(pic_mclr);
 
-        /* munmap GPIO */
-        ret = munmap(gpio_map, BLOCK_SIZE);
-        if (ret == -1) {
-            perror("munmap() failed");
-            exit(1);
-        }
+    /* munmap GPIO */
+    ret = munmap(gpio_map, BLOCK_SIZE);
+    if (ret == -1) {
+        perror("munmap() failed");
+        exit(1);
+    }
 
-        /* close /dev/gpiomem or /dev/mem */
-        ret = close(mem_fd);
-        if (ret == -1) {
+    /* close /dev/gpiomem or /dev/mem */
+    ret = close(mem_fd);
+    if (ret == -1) {
 #ifdef USE_DEV_GPIOMEM
-            perror("Cannot close /dev/gpiomem");
+        perror("Cannot close /dev/gpiomem");
 #else
-            perror("Cannot close /dev/mem");
+        perror("Cannot close /dev/mem");
 #endif
-            exit(1);
-        }
+        exit(1);
+    }
 }
 
 /* reset the device */
